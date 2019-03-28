@@ -1,0 +1,22 @@
+{% extends 'cpf/base.html' %}
+
+{% block content %}
+<h2>{{ question.question_text }}{{check}}</h2>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'cpf:voltar' question.id %}" method="post">
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+<input type="submit" value="Voltar" >
+</form>
+
+<form action="{% url 'cpf:delete' %}" method="post">
+        {% csrf_token %}
+    <input type="hidden" name="delete" value="{{ question.question_text }}">
+    <input type="submit" value="Em construcao">
+</form>
+{% endblock %}

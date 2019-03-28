@@ -1,0 +1,29 @@
+{% extends 'cpf/base.html' %}
+{% block content %}
+        {% if latest_question_list %}
+        <ul>
+                <h2>Lista de Todos os CPFS do banco</h2>
+        {% for question in latest_question_list %}
+    
+                
+                <h4><a href="{% url 'cpf:detail' question.id %}">{{ question.question_text }}</a></h4> 
+           
+    
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ainda nao tem cpf, cadastre um!.</p>
+    {% endif %}
+    
+    <h1>{{ question.question_text }}</h1>
+    
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    
+    <form action="{% url 'cpf:validate' %}" method="post">
+    {% csrf_token %}
+    <input type="number" name="cpf">
+    <input type="submit">
+    </form>
+{% endblock %}
+
+
